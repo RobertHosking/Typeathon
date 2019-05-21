@@ -1,0 +1,13 @@
+div:focus {
+  outline: none;
+}
+
+#heading {
+  font-size: 48px;
+  padding-top: 30px;
+}
+
+#content {
+  padding-top: 10px;
+  font-size: 24px;
+}

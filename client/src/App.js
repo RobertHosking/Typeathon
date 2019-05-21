@@ -1,40 +1,29 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+
+import Editor from "./Editor";
+import Menu from "./Menu";
 
 class App extends Component {
-  
-    state = {
-        data: null
-    };
+  state = {
+    selectedDoc: null
+  };
 
-    componentDidMount = () => {
-        console.log("hi there")
-      this.callBackendAPI()
-    }
-    
-    callBackendAPI = async () => {
-        const response = await fetch('/docs/');
-        const body = await response.json();
-        this.setState({data: body})
-    };
-   render = () => {
+  selectDoc = id => {
+    this.setState({ selectedDoc: id });
+  };
+
+  render = () => {
     return (
-        <div className="App">
-        <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-            </a>
-        </header>
-        </div>
-     );
-   }
+      <div>
+        {this.state.selectedDoc ? (
+          <Editor docID={this.state.selectedDoc} />
+        ) : (
+          <Menu setter={this.selectDoc} />
+        )}
+      </div>
+    );
+  };
 }
 
 export default App;
