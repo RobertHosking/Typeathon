@@ -1,10 +1,20 @@
 const express = require('express');
-const MonogClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
-        
+const db = require('./config/db');
+
 const app = express();
 
-const port = 80;
-app.listen(port, () =>{
-    console.log("we are live on " + port)
-});
+const port = 8000;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+MongoClient.connect(db.url, (err, database) => {
+    if(err) return console.log(err)
+    database = database.db("docs-api")
+    require('./app/routes')(app, database);
+    app.listen(port, () =>{
+        console.log("we are live on " + port)
+    });   
+})
+
